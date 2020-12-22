@@ -32,3 +32,15 @@ git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 rm -rf ../lean/luci-theme-argon
 
+# Add VSSR(HelloWorld)
+git clone https://github.com/jerrykuku/lua-maxminddb.git
+git clone https://github.com/jerrykuku/luci-app-vssr.git
+cd luci-app-vssr/root/etc/
+echo 'china_ssr.txt
+config/black.list
+config/white.list
+dnsmasq.oversea/oversea_list.conf
+dnsmasq.ssr/ad.conf
+dnsmasq.ssr/gfw_base.conf
+dnsmasq.ssr/gfw_list.conf' | xargs rm
+#cd ../../../
