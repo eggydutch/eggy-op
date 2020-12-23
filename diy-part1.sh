@@ -33,7 +33,7 @@ git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 rm -rf ../lean/luci-theme-argon
 
 # Add Diskman
-#git clone https://github.com/lisaac/luci-app-diskman
+git clone https://github.com/lisaac/luci-app-diskman
 
 # Add VSSR(HelloWorld)
 git clone https://github.com/jerrykuku/lua-maxminddb
