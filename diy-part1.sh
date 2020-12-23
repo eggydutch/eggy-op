@@ -35,7 +35,6 @@ rm -rf ../lean/luci-theme-argon
 # Add VSSR(HelloWorld)
 git clone https://github.com/jerrykuku/lua-maxminddb.git
 git clone https://github.com/jerrykuku/luci-app-vssr.git
-cd lede/package/lean/
 #cd luci-app-vssr/root/etc/vssr/
 #echo 'china_ssr.txt
 #config/black.list
