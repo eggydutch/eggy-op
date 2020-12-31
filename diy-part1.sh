@@ -17,9 +17,9 @@
 #sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
 
 # Add luci-app-ssr-plus
-#pushd package/lean
-#git clone --depth=1 https://github.com/fw876/helloworld
-#popd
+pushd package/lean
+git clone --depth=1 https://github.com/fw876/helloworld
+popd
 
 # Clone community packages to package/community
 #mkdir package/community
@@ -31,6 +31,9 @@ git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 # Add luci-theme-argon
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 rm -rf ../lean/luci-theme-argon
+
+# Add cpufreq
+git clone https://github.com/project-openwrt/openwrt/tree/openwrt-18.06/package/lean/luci-app-cpufreq
 
 # Add Diskman
 #git clone https://github.com/lisaac/luci-app-diskman
