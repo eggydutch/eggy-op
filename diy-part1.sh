@@ -33,7 +33,7 @@ git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 rm -rf ../lean/luci-theme-argon
 
 # Add cpufreq
-git clone https://github.com/project-openwrt/openwrt/tree/openwrt-18.06/package/lean/luci-app-cpufreq
+git clone https://github.com/project-openwrt/openwrt/tree/openwrt-18.06/package/lean/luci-app-cpufreq/root/etc
 
 # Add Diskman
 #git clone https://github.com/lisaac/luci-app-diskman
