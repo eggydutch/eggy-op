@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Build OpenWrt
+name: eggy r2s Lean's OpenWrt
 
 on:
   repository_dispatch:
@@ -20,6 +20,8 @@ on:
         default: 'false'
 #  schedule:
 #    - cron: 0 8 * * 5
+  watch:
+    types: [started]
 
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
