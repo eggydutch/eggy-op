@@ -22,7 +22,7 @@ on:
 #    - cron: 0 8 * * 5
 
 env:
-  REPO_URL: https://github.com/project-openwrt/openwrt
+  REPO_URL: https://github.com/project-openwrt/openwrt/tree/openwrt-18.06-k5.4
   REPO_BRANCH: openwrt-18.06-k5.4
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: project-op.config
