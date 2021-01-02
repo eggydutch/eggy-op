@@ -22,8 +22,8 @@ git clone --depth=1 https://github.com/fw876/helloworld
 popd
 
 # Clone community packages to package/community
-#mkdir package/community
-#pushd package/community
+mkdir package/community
+pushd package/community
 
 # Add OpenClash
 git clone --depth=1 -b master https://github.com/vernesong/OpenClash
