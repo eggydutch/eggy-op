@@ -104,13 +104,13 @@ jobs:
     - name: Compile the firmware
       id: compile
       run: |
-        cd openwrt
-        echo -e "$(nproc) thread compile"
-        make -j$(nproc) || make -j1 || make -j1 V=s
-        echo "::set-output name=status::success"
-        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
-        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
-        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+        cd "/home/runner/openwrt"
+        cp -f "${GITHUB_WORKSPACE}/project-op.config" ".config"
+        make defconfig
+        make -j$[$(nproc)+1]
+        mv -f "bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz" "../openwrt-18.06-rockchip-armv8-friendlyarm_nanopi-r2s-ext4-sysupgrade.img.gz"
+        mv -f "bin/targets/rockchip/armv8/openwrt-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz" "../openwrt-18.06-rockchip-armv8-friendlyarm_nanopi-r2s-squashfs-sysupgrade.img.gz"
+        mv -f "bin/targets/rockchip/armv8/sha256sums" "../openwrt-18.06-sha256sums"
         
     - name: Check space usage
       if: (!cancelled())
