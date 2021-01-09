@@ -17,9 +17,12 @@
 #sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
 
 # Add luci-app-ssr-plus
-pushd package/lean
-git clone --depth=1 https://github.com/fw876/helloworld
-popd
+#pushd package/lean
+#git clone --depth=1 https://github.com/fw876/helloworld
+#popd
+
+# Add Passwall
+git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
 # Clone community packages to package/community
 mkdir package/community
@@ -38,7 +41,7 @@ git clone https://github.com/coolsnowwolf/lede/tree/master/package/lean/luci-app
 # Add Diskman
 #git clone https://github.com/lisaac/luci-app-diskman
 
-# Add VSSR(HelloWorld)
+# Add VSSR(Hello World)
 git clone https://github.com/jerrykuku/lua-maxminddb
 git clone https://github.com/jerrykuku/luci-app-vssr
 #cd luci-app-vssr/root/etc/vssr/
