@@ -21,29 +21,20 @@
 #git clone --depth=1 https://github.com/fw876/helloworld
 #popd
 
+# Add Passwall
+#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+
 # Clone community packages to package/community
-mkdir package/community
-pushd package/community
+#mkdir package/community
+#pushd package/community
 
 # Add OpenClash
-git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+#git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 
 # Add luci-theme-argon
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
-rm -rf ../lean/luci-theme-argon
-
-# Add Diskman
-#git clone https://github.com/lisaac/luci-app-diskman
+#git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
+#rm -rf ../lean/luci-theme-argon
 
 # Add VSSR(HelloWorld)
-git clone https://github.com/jerrykuku/lua-maxminddb
-git clone https://github.com/jerrykuku/luci-app-vssr
-#cd luci-app-vssr/root/etc/vssr/
-#echo 'china_ssr.txt
-#config/black.list
-#config/white.list
-#dnsmasq.oversea/oversea_list.conf
-#dnsmasq.ssr/ad.conf
-#dnsmasq.ssr/gfw_base.conf
-#dnsmasq.ssr/gfw_list.conf' | xargs rm
-#cd ../../../
+#git clone https://github.com/jerrykuku/lua-maxminddb
+#git clone https://github.com/jerrykuku/luci-app-vssr
