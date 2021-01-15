@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: eggy r2s Lean's OpenWrt
+name: r2s Lean OpenWrt
 
 on:
   repository_dispatch:
