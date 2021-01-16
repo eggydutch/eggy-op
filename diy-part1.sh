@@ -42,7 +42,7 @@ git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 rm -rf ../lean/luci-theme-argon
 
 # Add cpufreq
-git clone --depth=1 https://github.com/coolsnowwolf/lede/tree/master/package/lean/luci-app-cpufreq
+#git clone --depth=1 https://github.com/coolsnowwolf/lede/tree/master/package/lean/luci-app-cpufreq
 
 # Add VSSR(Hello World)
 #git clone https://github.com/jerrykuku/lua-maxminddb
