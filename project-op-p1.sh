@@ -22,14 +22,14 @@
 #popd
 
 # Add Passwall
-#git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
+git clone --depth=1 -b main https://github.com/xiaorouji/openwrt-passwall
 
 # Clone community packages to package/community
 #mkdir package/community
 #pushd package/community
 
 # Add OpenClash
-#git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 
 # Add luci-theme-argon
 #git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
