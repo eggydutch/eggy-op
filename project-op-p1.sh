@@ -25,8 +25,8 @@
 git clone --depth=1 -b main https://github.com/xiaorouji/openwrt-passwall
 
 # Clone community packages to package/community
-#mkdir package/community
-#pushd package/community
+mkdir package/community
+pushd package/community
 
 # Add OpenClash
 git clone --depth=1 -b master https://github.com/vernesong/OpenClash
