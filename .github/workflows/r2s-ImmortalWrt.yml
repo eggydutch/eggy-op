@@ -13,13 +13,14 @@ name: r2s ImmortalWrt
 on:
   repository_dispatch:
   workflow_dispatch:
-    schedule:
-    - cron: 16 19 * * *
     inputs:
       ssh:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
+
+  schedule:
+    - cron: 25 19 * * *
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
