@@ -16,10 +16,10 @@ on:
     inputs:
       ssh:
         description: 'SSH connection to Actions'
-        required: true
-        default: 'true'
-#  schedule:
-#    - cron: 0 8 * * 5
+        required: false
+        default: 'false'
+  schedule:
+    - cron: 0 */19 * * *
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
