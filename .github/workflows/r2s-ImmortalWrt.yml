@@ -20,7 +20,7 @@ on:
         default: 'false'
 
   schedule:
-    - cron: 25 19 * * *
+    - cron: 0 17 * * *
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
