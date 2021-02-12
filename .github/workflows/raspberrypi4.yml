@@ -19,8 +19,8 @@ on:
         required: false
         default: 'false'
 
-  schedule:
-    - cron: 0 16 * * *
+  #schedule:
+    #- cron: 0 16 * * *
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
@@ -180,7 +180,7 @@ jobs:
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
       with:
-        retain_days: 1
+        retain_days: 7
         keep_minimum_runs: 3
 
     - name: Remove old Releases
