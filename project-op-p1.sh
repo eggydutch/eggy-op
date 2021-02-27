@@ -17,9 +17,9 @@
 #sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
 
 # Add luci-app-ssr-plus
-pushd package/lean
-git clone --depth=1 https://github.com/fw876/helloworld
-popd
+#pushd package/lean
+#git clone --depth=1 https://github.com/fw876/helloworld
+#popd
 
 # Add Passwall
 git clone --depth=1 -b main https://github.com/xiaorouji/openwrt-passwall
