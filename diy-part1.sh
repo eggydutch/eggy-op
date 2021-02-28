@@ -43,7 +43,7 @@ rm -rf ../lean/luci-theme-argon
 
 # Add cpufreq
 #git clone --depth=1 https://github.com/coolsnowwolf/lede/tree/master/package/lean/luci-app-cpufreq
-svn co https://github.com/immortalwrt/immortalwrt/tree/openwrt-18.06-k5.4/package/lean/luci-app-cpufreq
+git clone --depth=1 -b openwrt-18.06-k5.4 https://github.com/immortalwrt/immortalwrt/tree/openwrt-18.06-k5.4/package/lean/luci-app-cpufreq
 
 # Add VSSR(Hello World)
 #git clone https://github.com/jerrykuku/lua-maxminddb
