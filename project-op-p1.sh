@@ -20,6 +20,7 @@
 #pushd package/lean
 #git clone --depth=1 https://github.com/fw876/helloworld
 #popd
+git clone --depth=1 -b master https://github.com/fw876/helloworld
 
 # Add Passwall
 git clone --depth=1 -b main https://github.com/xiaorouji/openwrt-passwall
