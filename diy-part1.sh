@@ -50,4 +50,4 @@ git clone https://github.com/jerrykuku/lua-maxminddb
 git clone https://github.com/jerrykuku/luci-app-vssr
 
 # Add Luci App For Trojan-Go
-git clone --depth=1 -b main https://github.com/frainzy1477/luci-app-trojan
+git clone --depth=1 -b master https://github.com/frainzy1477/luci-app-trojan
