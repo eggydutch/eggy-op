@@ -37,7 +37,7 @@ echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf
 #git clone --depth=1 -b main https://github.com/xiaorouji/openwrt-passwall
 
 # Add OpenClash
-#git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 
 # Add luci-theme-argon
 git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
