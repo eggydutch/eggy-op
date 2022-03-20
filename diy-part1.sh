@@ -21,8 +21,8 @@ sed -i "/helloworld/d" "feeds.conf.default"
 echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
 
 # Clone community packages to package/community
-mkdir package/community
-pushd package/community
+#mkdir package/community
+#pushd package/community
 
 # Add Lienol's Packages
 #git clone --depth=1 https://github.com/Lienol/openwrt-package
