@@ -13,3 +13,7 @@
 # Modify default IP
 # sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_generate
 # echo -e '\nEggy Build\n' >> package/base-files/files/etc/banner
+
+Openclash dependencies
+sed -i "/openclash/d" "feeds.conf.default"
+echo "src-git base https://downloads.openwrt.org/snapshots/packages/aarch64_cortex-a53/base/" >> "feeds.conf.default"
