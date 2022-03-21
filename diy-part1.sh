@@ -17,8 +17,8 @@
 #pushd package/lean
 #git clone --depth=1 https://github.com/fw876/helloworld
 #popd
-sed -i "/helloworld/d" "feeds.conf.default"
-echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
+#sed -i "/helloworld/d" "feeds.conf.default"
+#echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
 
 # Clone community packages to package/community
 #mkdir package/community
@@ -40,8 +40,8 @@ echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf
 git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 
 # Add luci-theme-argon
-git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
-rm -rf ../lean/luci-theme-argon
+#git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
+#rm -rf ../lean/luci-theme-argon
 
 # Add cpufreq
 #git clone --depth=1 https://github.com/coolsnowwolf/lede/tree/master/package/lean/luci-app-cpufreq
