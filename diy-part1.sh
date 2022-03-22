@@ -34,7 +34,8 @@
 #popd
 
 # Add Passwall
-git clone --depth=1 -b main https://github.com/xiaorouji/openwrt-passwall
+git clone --depth=1 -b packages https://github.com/xiaorouji/openwrt-passwall
+git clone --depth=1 -b luci https://github.com/xiaorouji/openwrt-passwall
 
 # Add OpenClash
 git clone --depth=1 -b master https://github.com/vernesong/OpenClash
