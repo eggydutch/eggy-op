@@ -14,8 +14,8 @@
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add luci-app-ssr-plus
-#pushd package/lean
-#git clone --depth=1 https://github.com/fw876/helloworld
+pushd package/lean
+git clone --depth=1 https://github.com/fw876/helloworld
 #popd
 #sed -i "/helloworld/d" "feeds.conf.default"
 #echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
@@ -38,7 +38,7 @@
 #git clone --depth=1 -b luci https://github.com/xiaorouji/openwrt-passwall
 
 # Add OpenClash
-#git clone --depth=1 -b master https://github.com/vernesong/OpenClash
+git clone --depth=1 -b master https://github.com/vernesong/OpenClash
 
 # Add luci-theme-argon
 #git clone --depth=1 -b 18.06 https://github.com/jerrykuku/luci-theme-argon
