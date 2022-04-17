@@ -19,9 +19,7 @@ sed -i "/ssrplus/d" "feeds.conf.default"
 echo "src-git ssrplus https://github.com/fw876/helloworld" >> "feeds.conf.default"
 
 # HelloWorld
-sed -i "/helloworld/d" "feeds.conf.default"
 sed -i "/passwall/d" "feeds.conf.default"
-echo "src-git helloworld https://github.com/fw876/helloworld" >> "feeds.conf.default"
 echo "src-git passwall https://github.com/xiaorouji/openwrt-passwall" >> "feeds.conf.default"
 
 # Openclash
