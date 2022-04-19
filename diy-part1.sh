@@ -15,7 +15,7 @@
 
 # Add luci-app-ssr-plus
 pushd package/lean
-git clone --depth=1 https://github.com/fw876/helloworld
+#git clone --depth=1 https://github.com/fw876/helloworld
 #popd
 #sed -i "/helloworld/d" "feeds.conf.default"
 #echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
@@ -34,8 +34,8 @@ git clone --depth=1 https://github.com/fw876/helloworld
 #popd
 
 # Add Passwall
-git clone --depth=1 -b packages https://github.com/xiaorouji/openwrt-passwall
-git clone --depth=1 -b luci https://github.com/xiaorouji/openwrt-passwall
+#git clone --depth=1 -b packages https://github.com/xiaorouji/openwrt-passwall
+#git clone --depth=1 -b luci https://github.com/xiaorouji/openwrt-passwall
 
 # Add OpenClash
 git clone --depth=1 -b master https://github.com/vernesong/OpenClash
