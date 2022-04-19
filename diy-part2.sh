@@ -16,7 +16,7 @@
 
 # SSRP+
 #sed -i "/ssrplus/d" "feeds.conf.default"
-echo "src-git ssrplus https://github.com/fw876/helloworld" >> "feeds.conf.default"
+#echo "src-git ssrplus https://github.com/fw876/helloworld" >> "feeds.conf.default"
 
 # HelloWorld
 sed -i "/passwall/d" "feeds.conf.default"
