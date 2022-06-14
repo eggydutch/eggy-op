@@ -36,6 +36,7 @@ pushd package/lean
 # Add Passwall
 git clone --depth=1 -b packages https://github.com/xiaorouji/openwrt-passwall
 #git clone --depth=1 -b luci https://github.com/xiaorouji/openwrt-passwall
+#git clone --depth=1 -b main https://github.com/xiaorouji/openwrt-passwall2
 
 # Add OpenClash
 git clone --depth=1 -b master https://github.com/vernesong/OpenClash
