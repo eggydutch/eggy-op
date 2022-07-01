@@ -1,8 +1,17 @@
 name: gl.inet-ax1800-wlan-ap-5.4
 
 on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+  schedule:
+    - cron: 0 16 * * *
   watch:
-    types: started
+    types: [started]
 
 env:
   REPO_URL: https://github.com/monw/gl-infra-builder.git ##可以改成自己的仓库
