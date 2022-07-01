@@ -53,7 +53,7 @@ jobs:
         #svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-zerotier feeds/glinet/luci-app-zerotier
         #svn co https://github.com/coolsnowwolf/packages/trunk/net/zerotier feeds/glinet/zerotier
         svn co https://github.com/Lienol/openwrt-package/trunk/luci-app-ramfree feeds/glinet/luci-app-ramfree
-        svn co https://github.com/vernesong/OpenClash/tree/master/luci-app-openclash feeds/glinet/luci-app-openclash
+        svn co https://github.com/vernesong/OpenClash/ feeds/glinet/luci-app-openclash
         python3 setup.py -c config-wlan-ap-5.4.yml
         cd wlan-ap/openwrt
         svn checkout https://github.com/coolsnowwolf/lede/trunk/tools/ucl tools/ucl
