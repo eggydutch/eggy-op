@@ -57,7 +57,7 @@ git clone https://github.com/jerrykuku/luci-app-vssr
 #git clone --depth=1 -b master https://github.com/frainzy1477/luci-app-trojan
 
 # Add luci-app-frpc
-git clone --depth=1 -b main https://github.com/simplebean/luci-app-frpc
+git clone --depth=1 -b master https://github.com/f8q8/luci-app-frpc
 
 # Add luci-app-diskman
 git clone --depth=1 -b master https://github.com/lisaac/luci-app-diskman
