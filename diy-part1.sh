@@ -28,7 +28,7 @@ pushd package/lean
 #git clone --depth=1 https://github.com/Lienol/openwrt-package
 
 # Add Immortalwrt Packages
-git clone --depth=1 openwrt-21.02 https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications
+#git clone --depth=1 openwrt-21.02 https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications
 
 # Use Lienol's https-dns-proxy package
 #pushd feeds/packages/net
@@ -63,4 +63,4 @@ git clone https://github.com/jerrykuku/luci-app-vssr
 #git clone --depth=1 -b openwrt-21.02 https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications/luci-app-frpc
 
 # Add luci-app-diskman
-git clone --depth=1 -b master https://github.com/lisaac/luci-app-diskman
+#git clone --depth=1 -b master https://github.com/lisaac/luci-app-diskman
