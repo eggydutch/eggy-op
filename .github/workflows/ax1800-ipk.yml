@@ -9,21 +9,24 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      
     - name: Update
       run: |
         sudo apt update
         sudo apt upgrade -y
         sudo apt install asciidoc bash bc binutils bzip2 fastjar flex gawk gcc genisoimage gettext git intltool jikespg libgtk2.0-dev libncurses5-dev libssl1.0-dev make mercurial patch perl-modules python2.7-dev rsync ruby sdcc subversion unzip util-linux wget xsltproc zlib1g-dev zlib1g-dev -y
+    
     - name: Clone source code 
       run: |
         git clone https://github.com/gl-inet/sdk.git
+    
     - name: download sdk 
       run: |
         ./download.sh ipq_ipq60xx-qsdk11
+    
     - name: Compile 
       run: |
         ./builder.sh -d ax1800 -t ipq_ipq60xx-qsdk11
-            - name: Upload firmware directory
     
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
@@ -31,19 +34,3 @@ jobs:
       with:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
-            
-    - name: Generate release tag
-      id: tag
-      if: true && !failure() && !cancelled()
-      run: |
-        echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
-        echo "::set-output name=status::success"
-        
-    - name: Upload firmware to release
-      uses: softprops/action-gh-release@v1
-      if: steps.tag.outputs.status == 'success' && !cancelled() && !failure()
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.tag.outputs.release_tag }}
-        files: ${{ env.FIRMWARE }}/*
