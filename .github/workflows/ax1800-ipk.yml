@@ -8,11 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@main
-      
+      uses: actions/checkout@v3
     - name: Update
-      env:
-       DEBIAN_FRONTEND: noninteractive
       run: |
         sudo apt update
         sudo apt upgrade -y
@@ -27,6 +24,8 @@ jobs:
       run: |
         ./builder.sh -d ax1800 -t ipq_ipq60xx-qsdk11
             - name: Upload firmware directory
+    
+    - name: Upload firmware directory
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled() && !failure()
       with:
