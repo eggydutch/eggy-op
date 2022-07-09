@@ -25,16 +25,16 @@ pushd package/lean
 #pushd package/community
 
 # Add Lienol's Packages
-#git clone --depth=1 https://github.com/Lienol/openwrt-package
+git clone --depth=1 main https://github.com/Lienol/openwrt-package
+
+# Add kenzok8 Packages
+git clone --depth=1 master https://github.com/kenzok8/openwrt-packages
+
+# Add kenzok8 small Packages
+git clone --depth=1 master https://github.com/kenzok8/small
 
 # Add Immortalwrt Packages
 #git clone --depth=1 openwrt-21.02 https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications
-
-# Use Lienol's https-dns-proxy package
-#pushd feeds/packages/net
-#rm -rf https-dns-proxy
-#svn co https://github.com/Lienol/openwrt-packages/trunk/net/https-dns-proxy
-#popd
 
 # Add Passwall
 git clone --depth=1 -b packages https://github.com/xiaorouji/openwrt-passwall
