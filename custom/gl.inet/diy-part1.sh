@@ -14,7 +14,7 @@
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add luci-app-ssr-plus
-pushd package/lean
+#pushd package/lean
 #git clone --depth=1 https://github.com/fw876/helloworld
 #popd
 #sed -i "/helloworld/d" "feeds.conf.default"
@@ -25,16 +25,17 @@ pushd package/lean
 #pushd package/community
 
 # Add Lienol's Packages
-git clone --depth=1 main https://github.com/Lienol/openwrt-package
+git clone https://github.com/Lienol/openwrt-package
 
 # Add kenzok8 Packages
-git clone --depth=1 master https://github.com/kenzok8/openwrt-packages
+#git clone --depth=1 master https://github.com/kenzok8/openwrt-packages
+git clone https://github.com/kenzok8/openwrt-packages
 
 # Add kenzok8 small Packages
-git clone --depth=1 master https://github.com/kenzok8/small
+git clone https://github.com/kenzok8/small
 
 # Add Immortalwrt Packages
-git clone --depth=1 https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications
+git clone https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications
 
 # Add Passwall
 git clone --depth=1 -b packages https://github.com/xiaorouji/openwrt-passwall
