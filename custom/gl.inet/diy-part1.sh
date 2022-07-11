@@ -34,7 +34,7 @@ git clone --depth=1 master https://github.com/kenzok8/openwrt-packages
 git clone --depth=1 master https://github.com/kenzok8/small
 
 # Add Immortalwrt Packages
-#git clone --depth=1 openwrt-21.02 https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications
+git clone --depth=1 https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications
 
 # Add Passwall
 git clone --depth=1 -b packages https://github.com/xiaorouji/openwrt-passwall
@@ -60,7 +60,7 @@ git clone https://github.com/jerrykuku/luci-app-vssr
 #git clone --depth=1 -b master https://github.com/frainzy1477/luci-app-trojan
 
 # Add luci-app-frpc
-git clone --depth=1 -b https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications/luci-app-frpc
+#git clone --depth=1 -b https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications/luci-app-frpc
 
 # Add luci-app-diskman
-git clone --depth=1 -b https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications/luci-app-diskman
+#git clone --depth=1 -b https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications/luci-app-diskman
