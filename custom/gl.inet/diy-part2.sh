@@ -36,4 +36,4 @@ echo "src-git kenzok8small https://github.com/kenzok8/small" >> "feeds.conf.defa
 
 # Add Immortalwrt packages
 sed -i "/immortalwrt/d" "feeds.conf.default"
-echo "src-git immortalwrt https://github.com/immortalwrt/luci/tree/master/applications" >> "feeds.conf.default"
+echo "src-git immortalwrt https://github.com/immortalwrt/luci -b openwrt-21.02" >> "feeds.conf.default"
