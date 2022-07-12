@@ -14,7 +14,7 @@
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add luci-app-ssr-plus
-pushd package/lean
+#pushd package/lean
 #git clone --depth=1 https://github.com/fw876/helloworld
 #popd
 #sed -i "/helloworld/d" "feeds.conf.default"
@@ -29,7 +29,7 @@ pushd package/lean
 
 # Add kenzok8 Packages
 #git clone --depth=1 master https://github.com/kenzok8/openwrt-packages
-git clone https://github.com/kenzok8/openwrt-packages
+#git clone https://github.com/kenzok8/openwrt-packages
 
 # Add kenzok8 small Packages
 #git clone https://github.com/kenzok8/small
