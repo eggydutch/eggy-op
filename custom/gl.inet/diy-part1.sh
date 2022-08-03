@@ -28,7 +28,7 @@ pushd package/lean
 git clone https://github.com/NueXini/NueXini_Packages
 
 # Add Immortalwrt Packages
-git clone https://github.com/immortalwrt/packages/tree/openwrt-21.02
+git clone https://github.com/immortalwrt/packages
 
 # Add Lienol's Packages
 #git clone https://github.com/Lienol/openwrt-package
