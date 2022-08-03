@@ -36,4 +36,4 @@
 
 # Add Immortalwrt packages
 #sed -i "/immortalwrt/d" "feeds.conf.default"
-#echo "src-git immortalwrt https://github.com/immortalwrt/luci -b openwrt-21.02" >> "feeds.conf.default"
+#echo "src-git immortalwrt https://github.com/immortalwrt/packages -b openwrt-21.02" >> "feeds.conf.default"
