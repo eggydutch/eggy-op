@@ -27,6 +27,9 @@ pushd package/lean
 # Add NueXini Packages
 git clone https://github.com/NueXini/NueXini_Packages
 
+# Add Immortalwrt Packages
+git clone --depth=1 openwrt-21.02 https://github.com/immortalwrt/packages
+
 # Add Lienol's Packages
 #git clone https://github.com/Lienol/openwrt-package
 
@@ -37,7 +40,7 @@ git clone https://github.com/NueXini/NueXini_Packages
 # Add kenzok8 small Packages
 #git clone https://github.com/kenzok8/small
 
-# Add Immortalwrt Packages
+# Add Immortalwrt Luci
 #git clone https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications
 
 # Add Passwall
