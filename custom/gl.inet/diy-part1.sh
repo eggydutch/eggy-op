@@ -24,6 +24,9 @@ pushd package/lean
 #mkdir package/community
 #pushd package/community
 
+# Add NueXini Packages
+git clone https://github.com/NueXini/NueXini_Packages
+
 # Add Lienol's Packages
 #git clone https://github.com/Lienol/openwrt-package
 
