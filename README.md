@@ -1,6 +1,6 @@
 ## GL.iNet Slate-AXT1800/Flint-AX1800 Openwrt Firmware
 
-This openwrt firmware is a customized version based on [Lean's](https://github.com/coolsnowwolf/openwrt-gl-ax1800) source code and auto-build by github actions everyday at 00:00, please test and use it on your own risk.
+This openwrt firmware is a customized version based on [Lean's](https://github.com/coolsnowwolf/openwrt-gl-ax1800) source code and auto-build by github actions everyday at 00:00, please test and use it at your own risk.
 
 Product information: 
 - [Slate-AXT1800](https://www.gl-inet.com/products/gl-axt1800/)
@@ -30,7 +30,7 @@ Product information:
   - luci-app-vssr
   - luci-app-wifischedule
 
-## Known issues:
+## Known Issues
 1. Fan doesn't work on Slate-AXT1800
 2. 5Ghz WiFi is unstable and low speed
 
