@@ -36,7 +36,7 @@ Product information:
 
 ## Miscellaneous
 
-Here is the AEAD encrytion/decrytion performance for reference runned on Slate-AXT1800(cpu clock speed maximum at 1.2Ghz):
+Here is the [AEAD](https://en.wikipedia.org/wiki/Authenticated_encryption) encryption/decryption performance for reference runned on Slate-AXT1800(cpu clock speed maximum at 1.2Ghz):
 
 type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes  16384 bytes
 aes-256-gcm      55037.72k   158488.11k   301707.69k   392704.68k   429178.61k   429522.94k
