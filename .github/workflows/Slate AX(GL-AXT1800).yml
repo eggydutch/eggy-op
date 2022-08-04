@@ -18,8 +18,8 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
-  #schedule:
-    #- cron: 0 16 * * *
+  schedule:
+    - cron: 0 16 * * *
   watch:
     types: [started]
     
@@ -182,14 +182,14 @@ jobs:
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
       with:
-        retain_days: 10
+        retain_days: 7
         keep_minimum_runs: 3
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 14
+        keep_latest: 6
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
