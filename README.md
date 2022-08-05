@@ -46,6 +46,8 @@ chacha20-poly1305    36125.69k    77080.79k   152438.36k   182003.71k   193383.2
 
 And also the GL.iNet official firmware AEAD socre [HERE](https://forum.gl-inet.cn/forum.php?mod=viewthread&tid=311&extra=page%3D1) for comparison.
 
+For GL.iNet official openwrt source code version, please go to another project repository of mine [HERE](https://github.com/eggydutch/gl.inet-ax-series).
+
 ## Acknowledgments
 
 - [Microsoft Azure](https://azure.microsoft.com)
