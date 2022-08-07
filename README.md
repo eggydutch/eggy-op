@@ -27,6 +27,7 @@ Product information:
   - luci-app-upnp
   - luci-app-uugamebooster
   - luci-app-vsftpd
+  - luci-app-vlmcsd
   - luci-app-vssr
   - luci-app-wifischedule
 
