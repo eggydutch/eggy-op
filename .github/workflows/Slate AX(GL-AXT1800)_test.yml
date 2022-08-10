@@ -24,7 +24,7 @@ on:
     types: [started]
     
 env:
-  REPO_URL: https://github.com/zheshifandian/openwrt-ax1800
+  REPO_URL: https://github.com/eggydutch/openwrt-ax1800
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ./test/gl.inet/Slate-AXT1800.config
