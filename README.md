@@ -1,4 +1,4 @@
-## GL.iNet Slate-AXT1800/Flint-AX1800 Openwrt Firmware
+## GL.iNet Slate-AXT1800/Flint-AX1800 64-Bit Openwrt Firmware
 
 This openwrt firmware is a customized version based on [Lean's](https://github.com/coolsnowwolf/openwrt-gl-ax1800) source code and auto-build by github actions everyday at 00:00, please test and use it at your own risk.
 
