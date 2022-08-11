@@ -1,6 +1,6 @@
-## GL.iNet Slate-AXT1800/Flint-AX1800 64-Bit Openwrt Firmware
+## GL.iNet Slate-AXT1800/Flint-AX1800 Openwrt Firmware
 
-This openwrt firmware is a customized version based on [Lean's](https://github.com/coolsnowwolf/openwrt-gl-ax1800) source code and auto-build by github actions everyday at 00:00, please test and use it at your own risk.
+This openwrt firmware is a customized version based on [Lean's](https://github.com/coolsnowwolf/openwrt-gl-ax1800) source code(64-bit) and auto-build by github actions everyday at 00:00, please test and use it at your own risk.
 
 Product information: 
 - [Slate-AXT1800](https://www.gl-inet.com/products/gl-axt1800/)
@@ -38,7 +38,7 @@ Product information:
 
 ## Miscellaneous
 
-Here is the [AEAD](https://en.wikipedia.org/wiki/Authenticated_encryption) encryption/decryption performance for reference runned on Slate-AXT1800(cpu clock speed maximum at 1.2Ghz):
+Here is the [AEAD](https://en.wikipedia.org/wiki/Authenticated_encryption) encryption/decryption performance for reference runned on Slate-AXT1800(cpu clock speed maximum at 1.2Ghz) of this 64-bit firmware:
 
 type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes  16384 bytes
 aes-256-gcm      55037.72k   158488.11k   301707.69k   392704.68k   429178.61k   429522.94k
@@ -46,7 +46,7 @@ aes-256-gcm      55037.72k   158488.11k   301707.69k   392704.68k   429178.61k  
 type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes  16384 bytes
 chacha20-poly1305    36125.69k    77080.79k   152438.36k   182003.71k   193383.26k   193478.66k
 
-And also the GL.iNet official firmware AEAD socre [HERE](https://forum.gl-inet.cn/forum.php?mod=viewthread&tid=311&extra=page%3D1) for comparison.
+And also the GL.iNet official firmware(32-bit) AEAD socre [HERE](https://forum.gl-inet.cn/forum.php?mod=viewthread&tid=311&extra=page%3D1) for comparison.
 
 For GL.iNet official openwrt source code version, please go to another project repository of mine [HERE](https://github.com/eggydutch/gl.inet-ax-series).
 
