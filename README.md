@@ -16,6 +16,7 @@ Product information:
   - luci-app-autoreboot
   - luci-app-cifs-mount
   - luci-app-cpufreq
+  - luci-app-ddns
   - luci-app-filetransfer
   - luci-app-gowebdav
   - luci-app-hd-idle
