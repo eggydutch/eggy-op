@@ -25,7 +25,7 @@
 #pushd package/community
 
 # Add NueXini Packages
-#git clone https://github.com/NueXini/NueXini_Packages
+git clone https://github.com/NueXini/NueXini_Packages
 
 # Add Immortalwrt Packages
 #git clone https://github.com/immortalwrt/packages
