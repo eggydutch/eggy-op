@@ -15,8 +15,8 @@
 # echo -e '\nEggy Build\n' >> package/base-files/files/etc/banner
 
 # Add NueXini Packages
-sed -i "/NueXini/d" "feeds.conf.default"
-echo "src-git NueXini https://github.com/NueXini/NueXini_Packages" >> "feeds.conf.default"
+#sed -i "/NueXini/d" "feeds.conf.default"
+#echo "src-git NueXini https://github.com/NueXini/NueXini_Packages" >> "feeds.conf.default"
 
 # SSRP+
 #sed -i "/ssrplus/d" "feeds.conf.default"
