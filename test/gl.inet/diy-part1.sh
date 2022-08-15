@@ -14,7 +14,7 @@
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add luci-app-ssr-plus
-pushd package/lean
+#pushd package/lean
 #git clone --depth=1 https://github.com/fw876/helloworld
 #popd
 #sed -i "/helloworld/d" "feeds.conf.default"
@@ -25,7 +25,7 @@ pushd package/lean
 #pushd package/community
 
 # Add NueXini Packages
-git clone https://github.com/NueXini/NueXini_Packages
+#git clone https://github.com/NueXini/NueXini_Packages
 
 # Add Immortalwrt Packages
 #git clone https://github.com/immortalwrt/packages
