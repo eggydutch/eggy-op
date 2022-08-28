@@ -24,7 +24,7 @@ on:
     types: [started]
     
 env:
-  REPO_URL: https://github.com/zheshifandian/openwrt/tree/a1300
+  REPO_URL: https://github.com/zheshifandian/openwrt
   REPO_BRANCH: a1300
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ./test/gl.inet/GL-A1300.config
