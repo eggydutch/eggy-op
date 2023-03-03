@@ -24,8 +24,8 @@ on:
     types: [started]
     
 env:
-  REPO_URL: https://github.com/zheshifandian/openwrt
-  REPO_BRANCH: a1300
+  REPO_URL: https://github.com/zheshifandian/openwrt-a1300
+  REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ./test/gl.inet/GL-A1300.config
   DIY_P1_SH: ./test/gl.inet/diy-part1.sh
@@ -192,4 +192,4 @@ jobs:
         keep_latest: 3
         delete_tags: true
       env:
-        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
