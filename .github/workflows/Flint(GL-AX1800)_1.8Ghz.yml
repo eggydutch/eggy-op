@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: Slate AX(GL-AXT1800)_test
+name: Flint(GL-AX1800)_1.8Ghz
 
 on:
   repository_dispatch:
@@ -27,7 +27,7 @@ env:
   REPO_URL: https://github.com/zheshifandian/openwrt-ax1800
   REPO_BRANCH: stable
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: ./test/gl.inet/Slate-AXT1800.config
+  CONFIG_FILE: ./test/gl.inet/Flint-AX1800.config
   DIY_P1_SH: ./test/gl.inet/diy-part1.sh
   DIY_P2_SH: ./test/gl.inet/diy-part2.sh
   UPLOAD_BIN_DIR: false
@@ -162,9 +162,9 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::Slate-AXT1800_test-$(date +"%Y.%m.%d-%H%M")"
+        echo "::set-output name=release_tag::Flint-AX1800_1.8Ghz-$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
-        echo "Slate AX(GL-AXT1800) firmware" >> release.txt
+        echo "Flint (GL-AX1800) firmware" >> release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "::set-output name=status::success"
@@ -192,4 +192,4 @@ jobs:
         keep_latest: 3
         delete_tags: true
       env:
-        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
