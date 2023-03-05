@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: GL-A1300_ImmortalWrt
+name: GL-A1300
 
 on:
   repository_dispatch:
@@ -24,7 +24,7 @@ on:
     types: [started]
     
 env:
-  REPO_URL: https://github.com/immortalwrt/immortalwrt
+  REPO_URL: https://github.com/zheshifandian/openwrt-a1300
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ./test/gl.inet/GL-A1300.config
@@ -162,9 +162,9 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "{name}={release_tag::GL-A1300_ImmortalWrt-$(date +"%Y.%m.%d-%H%M")}" >> $GITHUB_OUTPUT
+        echo "{name}={release_tag::GL-A1300-$(date +"%Y.%m.%d-%H%M")}" >> $GITHUB_OUTPUT
         touch release.txt
-        echo "GL-A1300_ImmortalWrt firmware" >> release.txt
+        echo "GL-A1300 firmware" >> release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         echo "{name}={status::success}" >> $GITHUB_OUTPUT
