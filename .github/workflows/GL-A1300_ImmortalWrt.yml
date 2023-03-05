@@ -162,12 +162,15 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::GL-A1300_test-$(date +"%Y.%m.%d-%H%M")"
+        RELEASE_TAG=GL-A1300_test-$(date +"%Y.%m.%d-%H%M")
+        echo "release_tag=${RELEASE_TAG}" >> $GITHUB_ENV
         touch release.txt
         echo "GL-A1300_test firmware" >> release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        echo "::set-output name=status::success"
+        STATUS="success"
+        echo "status=${STATUS}" >> $GITHUB_ENV
+
         
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
