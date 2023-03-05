@@ -8,7 +8,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: GL-A1300_test
+name: GL-A1300_ImmortalWrt
 
 on:
   repository_dispatch:
