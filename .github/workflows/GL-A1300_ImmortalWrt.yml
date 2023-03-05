@@ -162,16 +162,13 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        RELEASE_TAG=GL-A1300_ImmortalWrt-$(date +"%Y.%m.%d-%H%M")
-        echo "release_tag=${RELEASE_TAG}" >> $GITHUB_ENV
+        echo "{name}={release_tag::GL-A1300_ImmortalWrt-$(date +"%Y.%m.%d-%H%M")}" >> $GITHUB_OUTPUT
         touch release.txt
         echo "GL-A1300_ImmortalWrt firmware" >> release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        STATUS="success"
-        echo "status=${STATUS}" >> $GITHUB_ENV
-
-        
+        echo "{name}={status::success}" >> $GITHUB_OUTPUT
+   
     - name: Upload firmware to release
       uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
