@@ -11,7 +11,7 @@
 #
 
 # Uncomment a feed source
-sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
+#sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add luci-app-ssr-plus
 pushd package/lean
@@ -25,7 +25,7 @@ echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf
 #pushd package/community
 
 # Add NueXini Packages
-#git clone https://github.com/NueXini/NueXini_Packages
+git clone https://github.com/NueXini/NueXini_Packages
 
 # Add Immortalwrt Packages
 #git clone https://github.com/immortalwrt/packages
