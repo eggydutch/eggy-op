@@ -11,18 +11,18 @@
 #
 
 # Uncomment a feed source
-sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
+#sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 # Add luci-app-ssr-plus
-pushd package/lean
-git clone --depth=1 https://github.com/fw876/helloworld
-popd
-sed -i "/helloworld/d" "feeds.conf.default"
-echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
+#pushd package/lean
+#git clone --depth=1 https://github.com/fw876/helloworld
+#popd
+#sed -i "/helloworld/d" "feeds.conf.default"
+#echo "src-git helloworld https://github.com/fw876/helloworld.git" >> "feeds.conf.default"
 
 # Clone community packages to package/community
-mkdir package/community
-pushd package/community
+#mkdir package/community
+#pushd package/community
 
 # Add NueXini Packages
 #git clone https://github.com/NueXini/NueXini_Packages
