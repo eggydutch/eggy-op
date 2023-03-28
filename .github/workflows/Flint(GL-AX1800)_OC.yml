@@ -162,7 +162,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::Flint-AX1800_1.8Ghz-$(date +"%Y.%m.%d-%H%M")"
+        echo "::set-output name=release_tag::Flint-AX1800__OC-$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
         echo "Flint (GL-AX1800) firmware" >> release.txt
         [ $UPLOAD_COWTRANSFER = true ] && echo "🔗 [Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
