@@ -1,5 +1,5 @@
 src-git packages https://github.com/sdf8057/packages.git;1806
-src-git luci https://github.com/coolsnowwolf/openwrt-gl-ax1800/extra/luci
+src-git luci https://github.com/sdf8057/luci.git;1806
 src-git routing https://github.com/openwrt/routing.git;openwrt-21.02
 src-git telephony https://github.com/openwrt/telephony.git;openwrt-21.02
 src-git kenzo https://github.com/kenzok8/openwrt-packages
