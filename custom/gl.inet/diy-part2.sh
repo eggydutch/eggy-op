@@ -35,5 +35,5 @@
 #echo "src-git kenzok8small https://github.com/kenzok8/small" >> "feeds.conf.default"
 
 # Add Immortalwrt packages
-sed -i "/immortalwrt/d" "feeds.conf.default"
-echo "src-git immortalwrt https://github.com/immortalwrt/packages -b openwrt-21.02" >> "feeds.conf.default"
+#sed -i "/immortalwrt/d" "feeds.conf.default"
+#echo "src-git immortalwrt https://github.com/immortalwrt/packages -b openwrt-21.02" >> "feeds.conf.default"
