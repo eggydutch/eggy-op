@@ -1,6 +1,6 @@
 ## GL.iNet Slate-AXT1800/Flint-AX1800 Openwrt Firmware
 
-This openwrt firmware is a customized version based on [Lean's](https://github.com/coolsnowwolf/openwrt-gl-ax1800) source code(64-bit) and auto-build by github actions everyday at 00:00, please test and use it at your own risk.
+This openwrt firmware is a customized version based on [sdf8057's](https://github.com/sdf8057/ipq6000/tree/wifi) source code(64-bit, thanks to [Lean](https://github.com/coolsnowwolf/openwrt-gl-ax1800)) and auto-build by github actions everyday at 00:00, please test and use it at your own risk.
 
 Product information: 
 - [Slate-AXT1800](https://www.gl-inet.com/products/gl-axt1800/)
@@ -8,27 +8,32 @@ Product information:
 
 ## Firmware Configuration
 
+- CPU overclock to 1.6Ghz
 - Default IP address: 192.168.1.1
 - Default passward: no login password
 - Integrated Luci-apps:
   - luci-app-accesscontrol
+  - luci-app-aliyundrive-webdav
   - luci-app-arpbind
   - luci-app-autoreboot
-  - luci-app-cifs-mount
   - luci-app-cpufreq
   - luci-app-ddns
+  - luci-app-diskman
   - luci-app-filetransfer
+  - luci-app-firewall
   - luci-app-gowebdav
   - luci-app-hd-idle
   - luci-app-openclash
-  - luci-app-qbittorrent
+  - luci-app-passwall2
   - luci-app-qos
   - luci-app-ramfree
+  - luci-app-ssr-plus
+  - luci-app-transmission
   - luci-app-ttyd
+  - luci-app-turboacc
   - luci-app-upnp
-  - luci-app-uugamebooster
-  - luci-app-vsftpd
   - luci-app-vlmcsd
+  - luci-app-vsftpd
   - luci-app-vssr
   - luci-app-wifischedule
 
@@ -40,11 +45,7 @@ Product information:
 
 Here is the [AEAD](https://en.wikipedia.org/wiki/Authenticated_encryption) encryption/decryption performance for reference runned on Slate-AXT1800(cpu clock speed maximum at 1.2Ghz) of this 64-bit firmware:
 
-type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes  16384 bytes
-aes-256-gcm      55037.72k   158488.11k   301707.69k   392704.68k   429178.61k   429522.94k
-
-type             16 bytes     64 bytes    256 bytes   1024 bytes   8192 bytes  16384 bytes
-chacha20-poly1305    36125.69k    77080.79k   152438.36k   182003.71k   193383.26k   193478.66k
+![openssl](https://user-images.githubusercontent.com/59375032/230366272-cb52edd6-f56e-4c5b-b398-a1da9282dfa0.jpg)
 
 And also the GL.iNet official firmware(32-bit) AEAD socre [HERE](https://forum.gl-inet.cn/forum.php?mod=viewthread&tid=311&extra=page%3D1) for comparison.
 
