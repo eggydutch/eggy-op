@@ -24,8 +24,8 @@ on:
     types: [started]
     
 env:
-  REPO_URL: https://github.com/zheshifandian/openwrt-ax1800
-  REPO_BRANCH: stable
+  REPO_URL: https://github.com/sdf8057/ipq6000
+  REPO_BRANCH: wifi
   FEEDS_CONF: ./test/gl.inet/feeds.conf.default
   CONFIG_FILE: ./config/gl.inet/Slate-AXT1800_sdf8057.config
   DIY_P1_SH: ./custom/gl.inet/diy-part1.sh
