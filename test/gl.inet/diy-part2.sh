@@ -41,3 +41,6 @@
 # Add Immortalwrt packages
 #sed -i "/immortalwrt/d" "feeds.conf.default"
 #echo "src-git immortalwrt https://github.com/immortalwrt/packages -b openwrt-21.02" >> "feeds.conf.default"
+
+# Enable Cache
+echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config
