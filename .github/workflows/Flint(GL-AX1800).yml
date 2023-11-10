@@ -24,8 +24,8 @@ on:
     types: [started]
 
 env:
-  REPO_URL: https://github.com/JiaY-shi/openwrt/
-  REPO_BRANCH: ipq60xx-devel_nss
+  REPO_URL: https://github.com/KK2018gh/ipq6000sdf
+  REPO_BRANCH: main
   FEEDS_CONF: ./test/gl.inet/feeds.conf.default
   CONFIG_FILE: ./test/gl.inet/Flint-AX1800.config
   DIY_P1_SH: ./test/gl.inet/diy-part1.sh
