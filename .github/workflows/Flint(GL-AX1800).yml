@@ -26,7 +26,7 @@ on:
 env:
   REPO_URL: https://github.com/sdf8057/ipq6000
   REPO_BRANCH: master
-  FEEDS_CONF: ./feeds.conf.default
+  FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: ./test/gl.inet/Flint-AX1800.config
   DIY_P1_SH: ./test/gl.inet/diy-part1.sh
   DIY_P2_SH: ./test/gl.inet/diy-part2.sh
