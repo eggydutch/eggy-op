@@ -26,10 +26,10 @@ on:
 env:
   REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
   REPO_BRANCH: openwrt-21.02
-  FEEDS_CONF: feeds.conf.default
+  FEEDS_CONF: ./test/rax3km/feeds.conf.default
   CONFIG_FILE: ./config/rax3km/rax3000m.config
   DIY_P1_SH: ./test/gl.inet/diy-part1.sh
-  DIY_P2_SH: ./custom/raspberry-pi/diy-part2.sh
+  DIY_P2_SH: ./custom/rax3km/diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
@@ -96,8 +96,8 @@ jobs:
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
-    - name: Update Golang
-      run: cd openwrt && git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
+    # - name: Update Golang
+      # run: cd openwrt && git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
 
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
