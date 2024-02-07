@@ -93,15 +93,6 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
-    - name: Update feeds
-      run: cd openwrt && ./scripts/feeds update -a
-
-    - name: Update Golang
-      run: cd openwrt && git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
-
-    - name: Install feeds
-      run: cd openwrt && ./scripts/feeds install -a
-
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
@@ -109,6 +100,15 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
+
+    - name: Update Golang
+      run: cd openwrt && git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
+
+    - name: Update feeds
+      run: cd openwrt && ./scripts/feeds update -a
+      
+    - name: Install feeds
+      run: cd openwrt && ./scripts/feeds install -a
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
