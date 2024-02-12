@@ -95,8 +95,8 @@ jobs:
     # - name: Update Golang
       # run: cd openwrt && git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
 
-    - name: Remove old openclash
-      run: cd openwrt && rm -rf feeds/luci/applications/luci-app-openclash
+    # - name: Remove old openclash
+      # run: cd openwrt && rm -rf feeds/luci/applications/luci-app-openclash
       
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
