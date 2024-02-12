@@ -11,8 +11,8 @@
 #
 
 # Modify default IP
-sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_generate
-rm -rf feeds/luci/applications/openclash/
+sed -i 's/192.168.1.1/192.168.1.1/g' package/base-files/files/bin/config_generate
+rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/packages/net/xray-core/
 rm -rf feeds/packages/net/xray-plugin/
 git clone https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
