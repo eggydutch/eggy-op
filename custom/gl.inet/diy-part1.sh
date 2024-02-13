@@ -63,11 +63,6 @@
 #git clone https://github.com/jerrykuku/lua-maxminddb
 #git clone https://github.com/jerrykuku/luci-app-vssr
 
-# Add Luci App For Trojan-Go
-#git clone --depth=1 -b master https://github.com/frainzy1477/luci-app-trojan
-
-# Add luci-app-frpc
-#git clone --depth=1 -b https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications/luci-app-frpc
-
-# Add luci-app-diskman
-#git clone --depth=1 -b https://github.com/immortalwrt/luci/tree/openwrt-21.02/applications/luci-app-diskman
+# Add kiddin9
+echo 'src-git kiddin9 https://github.com/kiddin9/openwrt-packages' >>feeds.conf.default
+echo 'src-git small https://github.com/kenzok8/small' >>feeds.conf.default
