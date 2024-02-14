@@ -21,6 +21,9 @@ rm -rf ./feeds/packages/net/xray-plugin/
 git clone https://github.com/vernesong/OpenClash package/openclash
 git clone https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall_packages
+# rm -rf $(find ./feeds/luci/ -type d -regex ".*\(passwall\|openclash\).*")
+# rm -rf $(find ./feeds/packages/net/ -type d -regex ".*\(xray-core\|xray-plugin\).*")
+# rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
 # Update Golang
 # git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
 #echo -e '\nEggy Build\n' >> package/base-files/files/etc/banner
