@@ -19,7 +19,7 @@ rm -rf ./feeds/luci/applications/luci-app-ssr-plus
 # rm -rf ./feeds/luci/applications/luci-app-passwall
 rm -rf ./feeds/packages/net/xray-core
 rm -rf ./feeds/packages/net/xray-plugin
-git clone -b master --single-branch https://github.com/fw876/helloworld package/luci-app-ssr-plus
+git clone -b master --single-branch https://github.com/fw876/helloworld.git package/luci-app-ssr-plus
 git clone -b master --single-branch https://github.com/vernesong/OpenClash.git package/openclash
 # git clone -b main --single-branch https://github.com/xiaorouji/openwrt-passwall.git package/luci-app-passwall
 # git clone https://github.com/xiaorouji/openwrt-passwall-packages.git package/passwall_packages
