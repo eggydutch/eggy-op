@@ -18,9 +18,9 @@ rm -rf ./feeds/luci/applications/openclash/
 rm -rf ./feeds/luci/applications/luci-app-passwall/
 rm -rf ./feeds/packages/net/xray-core/
 rm -rf ./feeds/packages/net/xray-plugin/
-git clone https://github.com/vernesong/OpenClash package/openclash
-git clone https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
-git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall_packages
+git clone -b master https://github.com/vernesong/OpenClash.git package/openclash
+git clone -b main https://github.com/xiaorouji/openwrt-passwall.git package/luci-app-passwall
+git clone https://github.com/xiaorouji/openwrt-passwall-packages.git package/passwall_packages
 # rm -rf $(find ./feeds/luci/ -type d -regex ".*\(passwall\|openclash\).*")
 # rm -rf $(find ./feeds/packages/net/ -type d -regex ".*\(xray-core\|xray-plugin\).*")
 # rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
