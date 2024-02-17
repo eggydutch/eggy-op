@@ -28,8 +28,8 @@ env:
   REPO_BRANCH: openwrt-21.02
   FEEDS_CONF: ./test/rax3km/feeds.conf.default
   CONFIG_FILE: ./test/rax3km/rax3000m.config
-  DIY_P1_SH: ./test/gl.inet/diy-part1.sh
-  DIY_P2_SH: ./custom/rax3km/diy-part2.sh
+  DIY_P1_SH: ./test/rax3km/diy-part1.sh
+  DIY_P2_SH: ./test/rax3km/diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
