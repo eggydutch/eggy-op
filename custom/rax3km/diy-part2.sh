@@ -14,11 +14,11 @@
 sed -i 's/192.168.1.1/192.168.1.1/g' package/base-files/files/bin/config_generate
 
 # Remove old version packages
-rm -rf ./feeds/luci/applications/openclash
-rm -rf ./feeds/luci/applications/luci-app-ssr-plus
+# rm -rf ./feeds/luci/applications/openclash
+# rm -rf ./feeds/luci/applications/luci-app-ssr-plus
 # rm -rf ./feeds/luci/applications/luci-app-passwall
-rm -rf ./feeds/packages/net/xray-core
-rm -rf ./feeds/packages/net/xray-plugin
+# rm -rf ./feeds/packages/net/xray-core
+# rm -rf ./feeds/packages/net/xray-plugin
 git clone -b master --single-branch https://github.com/fw876/helloworld.git package/luci-app-ssr-plus
 git clone -b master --single-branch https://github.com/vernesong/OpenClash.git package/openclash
 # git clone -b main --single-branch https://github.com/xiaorouji/openwrt-passwall.git package/luci-app-passwall
