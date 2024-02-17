@@ -22,7 +22,8 @@ sed -i 's/192.168.1.1/192.168.1.1/g' package/base-files/files/bin/config_generat
 git clone -b master --single-branch https://github.com/fw876/helloworld.git package/luci-app-ssr-plus
 git clone -b master --single-branch https://github.com/vernesong/OpenClash.git package/openclash
 # git clone -b main --single-branch https://github.com/xiaorouji/openwrt-passwall.git package/luci-app-passwall
-# git clone https://github.com/xiaorouji/openwrt-passwall-packages.git package/passwall_packages
+git clone -b main --single-branch https://github.com/xiaorouji/openwrt-passwall2 package/luci-app-passwall2
+git clone https://github.com/xiaorouji/openwrt-passwall-packages.git package/passwall_packages
 # rm -rf $(find ./feeds/luci/ -type d -regex ".*\(passwall\|openclash\).*")
 # rm -rf $(find ./feeds/packages/net/ -type d -regex ".*\(xray-core\|xray-plugin\).*")
 # rm -rf feeds/smpackage/{base-files,dnsmasq,firewall*,fullconenat,libnftnl,nftables,ppp,opkg,ucl,upx,vsftpd-alt,miniupnpd-iptables,wireless-regdb}
