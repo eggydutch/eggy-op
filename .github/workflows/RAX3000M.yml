@@ -101,7 +101,10 @@ jobs:
 
     - name: Remove packages
       run: cd openwrt && rm -rf ./feeds/luci/applications/luci-app-openclash && rm -rf ./feeds/luci/applications/luci-app-passwall && rm -rf ./feeds/luci/applications/luci-app-ssr-plus && rm -rf ./feeds/packages/net/xray-core && rm -rf ./feeds/packages/net/xray-plugin
-      
+
+    - name: Update iptables
+      run: cd openwrt && git clone -b master --single-branch https://github.com/immortalwrt/immortalwrt/tree/master/package/network/utils/iptables iptables_master && rm -rf package/network/utils/iptables && mv ./iptables_master/package/network/utils/iptables ./feeds/packages/iptables && rm -rf ./iptables_master
+
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
