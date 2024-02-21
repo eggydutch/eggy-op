@@ -102,8 +102,8 @@ jobs:
     - name: Remove packages
       run: cd openwrt && rm -rf ./feeds/luci/applications/luci-app-openclash && rm -rf ./feeds/luci/applications/luci-app-passwall && rm -rf ./feeds/luci/applications/luci-app-ssr-plus && rm -rf ./feeds/packages/net/xray-core && rm -rf ./feeds/packages/net/xray-plugin
 
-    - name: Update iptables
-      run: cd openwrt && rm -rf package/network/utils/iptables
+    # - name: Update iptables
+      # run: cd openwrt && rm -rf package/network/utils/iptables
 
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
