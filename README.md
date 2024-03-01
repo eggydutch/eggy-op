@@ -1,6 +1,6 @@
 ## GL.iNet Slate-AXT1800/Flint-AX1800 Openwrt Firmware
 
-This openwrt firmware is a customized version based on [sdf8057's](https://github.com/sdf8057/ipq6000/tree/wifi) source code(64-bit, thanks to [Lean](https://github.com/coolsnowwolf/openwrt-gl-ax1800)) and auto-build by github actions everyday at 00:00, please test and use it at your own risk.
+This openwrt firmware is a customized version based on [sdf8057's]([https://github.com/sdf8057/ipq6000/tree/wifi](https://github.com/sdf8057/ipq6000)) source code(64-bit, thanks to [Lean](https://github.com/coolsnowwolf/openwrt-gl-ax1800)) and auto-build by github actions everyday at 00:00, please test and use it at your own risk.
 
 Product information: 
 - [Slate-AXT1800](https://www.gl-inet.com/products/gl-axt1800/)
