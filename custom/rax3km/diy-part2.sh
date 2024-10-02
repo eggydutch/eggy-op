@@ -27,5 +27,6 @@ git clone -b master --single-branch https://github.com/vernesong/OpenClash.git p
 # git clone -b main --single-branch https://github.com/xiaorouji/openwrt-passwall.git package/luci-app-passwall
 git clone -b main --single-branch https://github.com/xiaorouji/openwrt-passwall2 package/luci-app-passwall2
 git clone https://github.com/xiaorouji/openwrt-passwall-packages.git package/passwall_packages
+git clone -b main --single-branch https://github.com/sbwml/luci-app-alist.git package/luci-app-alist
 # git clone -b master --single-branch https://github.com/immortalwrt/immortalwrt.git package/ip_master
 
