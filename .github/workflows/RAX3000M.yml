@@ -94,6 +94,12 @@ jobs:
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
 
+    - name: Pre-download v2ray-geodata file (dlc.dat)
+      run: |
+        cd openwrt
+        mkdir -p dl
+        wget https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat -O dl/dlc.dat.20231202050515
+
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
