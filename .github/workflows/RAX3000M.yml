@@ -52,7 +52,7 @@ jobs:
         cache: false
 
     - name: Debug Go PATH and version after install
-  run: |
+      run: |
         echo "PATH is: $PATH"
         which go || echo "go not found in PATH"
         go version || echo "go command failed"
