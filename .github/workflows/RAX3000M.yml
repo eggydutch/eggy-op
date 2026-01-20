@@ -49,6 +49,7 @@ jobs:
       uses: actions/setup-go@v6   # or v6 if already available in Jan 2026
       with:
         go-version: '1.26' 
+        cache: false
 
     - name: Initialization environment
       env:
