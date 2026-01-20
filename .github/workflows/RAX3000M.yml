@@ -51,6 +51,17 @@ jobs:
         go-version: '1.25.6' 
         cache: false
 
+    - name: Debug Go PATH and version after install
+  run: |
+        echo "PATH is: $PATH"
+        which go || echo "go not found in PATH"
+        go version || echo "go command failed"
+        go env || true
+
+    - name: Debug Go version inside build dir (critical)
+      run: |
+        cd open​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+
     - name: Initialization environment
       env:
         DEBIAN_FRONTEND: noninteractive
