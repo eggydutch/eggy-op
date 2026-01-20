@@ -1,0 +1,225 @@
+#
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+
+name: RAX3000M_G
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+  watch:
+    types: [started]
+
+env:
+  REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
+  REPO_BRANCH: openwrt-21.02
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: ./config/rax3km/rax3000m_21.02.config
+  DIY_P1_SH: ./custom/rax3km/diy-part1.sh
+  DIY_P2_SH: ./custom/rax3km/diy-part2.sh
+  UPLOAD_BIN_DIR: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: false
+  UPLOAD_WETRANSFER: false
+  UPLOAD_RELEASE: true
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Go 1.25.6
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.25.6'
+          cache: false
+
+      - name: Initialization environment
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+          sudo -E apt-get -qq update
+          sudo -E apt-get -qq install ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp ninja-build p7zip p7zip-full patch pkgconf python2.7 python3 python3-pyelftools python3-setuptools qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+          sudo -E apt-get -qq autoremove --purge
+          sudo -E apt-get -qq clean
+          sudo timedatectl set-timezone "$TZ"
+          sudo mkdir -p /workdir
+          sudo chown $USER:$GROUPS /workdir
+
+      - name: Clone source code
+        working-directory: /workdir
+        run: |
+          df -hT $PWD
+          git clone $REPO_URL -b $REPO_BRANCH openwrt
+          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+
+      - name: Cache
+        uses: stupidloud/cachewrtbuild@main
+        with:
+          ccache: 'true'
+          prefix: ${{ github.workspace }}/openwrt
+
+      - name: Load custom feeds
+        working-directory: /workdir/openwrt
+        run: |
+          [ -e $FEEDS_CONF ] && mv $FEEDS_CONF feeds.conf.default
+          chmod +x $GITHUB_WORKSPACE/$DIY_P1_SH
+          $GITHUB_WORKSPACE/$DIY_P1_SH
+
+      - name: Update feeds
+        working-directory: /workdir/openwrt
+        run: ./scripts/feeds update -a
+
+      # Disabled to prevent overriding host Go toolchain with older version
+      # - name: Update Golang
+      #   working-directory: /workdir/openwrt
+      #   run: git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
+
+      - name: Remove packages
+        working-directory: /workdir/openwrt
+        run: |
+          rm -rf ./feeds/luci/applications/luci-app-openclash
+          rm -rf ./feeds/luci/applications/luci-app-passwall
+          rm -rf ./feeds/luci/applications/luci-app-ssr-plus
+          rm -rf ./feeds/luci/applications/luci-app-alist
+          rm -rf ./feeds/packages/net/xray-core
+          rm -rf ./feeds/packages/net/xray-plugin
+
+      - name: Install feeds
+        working-directory: /workdir/openwrt
+        run: ./scripts/feeds install -a
+
+      - name: Pre-download v2ray-geodata file (dlc.dat)
+        working-directory: /workdir/openwrt
+        run: |
+          mkdir -p dl
+          wget https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat -O dl/dlc.dat.20231202050515
+
+      - name: Load custom configuration
+        working-directory: /workdir/openwrt
+        run: |
+          [ -e $GITHUB_WORKSPACE/files ] && mv $GITHUB_WORKSPACE/files files
+          [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
+          chmod +x $GITHUB_WORKSPACE/$DIY_P2_SH
+          $GITHUB_WORKSPACE/$DIY_P2_SH
+
+      - name: SSH connection to Actions
+        uses: P3TERX/ssh2actions@main
+        if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh != 'false') || contains(github.event.action, 'ssh')
+        env:
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+      - name: Download package
+        working-directory: /workdir/openwrt
+        run: |
+          make defconfig
+          make download -j8
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
+
+      - name: Compile the firmware
+        working-directory: /workdir/openwrt
+        env:
+          PATH: /usr/local/go/bin:${{ env.PATH }}
+          GOTOOLCHAIN: auto
+        run: |
+          echo "=== DEBUG: Go version during compile ==="
+          which go || echo "go NOT found!"
+          go version || echo "go version FAILED!"
+          echo "PATH excerpt: $(echo $PATH | grep '/usr/local/go' || echo 'No custom Go in PATH')"
+          echo -e "$(nproc) thread compile"
+          make -j$(nproc) V=s || make -j1 V=s || make -j1 V=s download || make -j1 V=s
+          echo "status=success" >> $GITHUB_OUTPUT
+          grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+          [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
+          echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+
+      - name: Check space usage
+        if: (!cancelled())
+        run: df -hT
+
+      - name: Upload bin directory
+        uses: actions/upload-artifact@main
+        if: success() && env.UPLOAD_BIN_DIR == 'true'
+        with:
+          name: OpenWrt_bin${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
+          path: /workdir/openwrt/bin
+
+      - name: Organize files
+        if: env.UPLOAD_FIRMWARE == 'true' && success()
+        run: |
+          mkdir firmware
+          mv -f /workdir/openwrt/bin/targets/*/*/{*combined*,*sysupgrade*} ./firmware/ 2>/dev/null || true
+          cp /workdir/openwrt/.config  ./firmware/config
+          cp /workdir/openwrt/build_dir/target-*/linux-*/linux-*/.config ./firmware/_kernel.config 2>/dev/null || true
+          cd firmware
+          echo "v${{ env.date2 }}" > version.txt
+          md5=$(md5sum *squashfs-sysupgrade* 2>/dev/null || md5sum *squashfs-combined-efi* 2>/dev/null | awk '{print $1}') || true
+          echo $md5 >> version.txt
+          rename -v "s/^openwrt/${{ env.VERSION }}-openwrt/" * || true
+          rename -v "s/friendlyarm_//" *gz || true
+          echo $md5 >> version.txt
+          rm -f sha256sums
+          echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+
+      - name: Upload firmware directory
+        uses: actions/upload-artifact@main
+        if: success() && env.UPLOAD_FIRMWARE == 'true'
+        with:
+          name: ipq6000${{ env.FILE_DATE }}
+          path: ${{ env.FIRMWARE }}
+
+      # ... (keep the rest of your upload steps as-is: cowtransfer, wetransfer, release, delete runs, remove old releases)
+
+      - name: Generate release tag
+        if: env.UPLOAD_RELEASE == 'true' && success()
+        run: |
+          echo "release_tag=RAX3000M_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+          touch release.txt
+          echo "RAX3000M firmware" >> release.txt
+          [ $UPLOAD_COWTRANSFER = true ] && echo "[Cowtransfer](${{ steps.cowtransfer.outputs.url }})" >> release.txt
+          [ $UPLOAD_WETRANSFER = true ] && echo "[WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
+          echo "status=success" >> $GITHUB_OUTPUT
+
+      - name: Upload firmware to release
+        uses: softprops/action-gh-release@master
+        if: env.UPLOAD_RELEASE == 'true' && success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag.outputs.release_tag }}
+          body_path: release.txt
+          files: ${{ env.FIRMWARE }}/*
+
+      - name: Delete workflow runs
+        uses: GitRML/delete-workflow-runs@main
+        with:
+          retain_days: 1
+          keep_minimum_runs: 7
+
+      - name: Remove old Releases
+        uses: dev-drprasad/delete-older-releases@master
+        if: env.UPLOAD_RELEASE == 'true' && success()
+        with:
+          keep_latest: 9
+          delete_tags: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
