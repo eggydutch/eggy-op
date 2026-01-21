@@ -1,4 +1,4 @@
-name: RAX3000M_G
+name: RAX3000M
 
 on:
   repository_dispatch:
@@ -27,27 +27,24 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04   # more reliable for OpenWrt builds in many cases
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Go 1.25.6
-        uses: actions/setup-go@v6
-        with:
-          go-version: '1.25.6'
-          cache: false
-
-      - name: Initialization environment
+      - name: Initialization environment + essential tools
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
           sudo docker image prune --all --force || true
-          sudo apt-get update
-          sudo apt-get install -y \
-            ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential \
+          sudo apt-get update -qq
+          # Install core basics FIRST to avoid command-not-found in later scripts
+          sudo apt-get install -y --no-install-recommends coreutils procps grep findutils debianutils make build-essential
+          # Then the full OpenWrt build deps
+          sudo apt-get install -y --no-install-recommends \
+            ack antlr3 asciidoc autoconf automake autopoint binutils bison \
             bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext \
             gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 \
             libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev libmpc-dev libmpfr-dev \
@@ -61,14 +58,15 @@ jobs:
           sudo timedatectl set-timezone "$TZ" || true
           sudo mkdir -p /workdir
           sudo chown $(whoami):$(id -gn) /workdir
+          # Verify critical commands exist
+          command -v make nproc grep which go || { echo "CRITICAL: Missing essential command"; exit 1; }
           df -hT /workdir
 
-      - name: Install essential utilities (nproc, grep, which, make, etc.)
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y coreutils procps grep findutils debianutils make
-          # Quick check
-          command -v nproc grep which make || echo "Some basic utils still missing!"
+      - name: Install Go 1.25.6
+        uses: actions/setup-go@v6
+        with:
+          go-version: '1.25.6'
+          cache: false
 
       - name: Clone source code
         working-directory: /workdir
@@ -98,19 +96,13 @@ jobs:
       - name: Update feeds
         run: cd /workdir/openwrt && ./scripts/feeds update -a
 
-      # Disabled - was overriding host Go version
       # - name: Update Golang
-      #   run: cd /workdir/openwrt && git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
+      #   run: cd /workdir/openwrt && ... (keep commented)
 
       - name: Remove conflicting packages
         run: |
           cd /workdir/openwrt || exit 1
-          rm -rf ./feeds/luci/applications/luci-app-openclash
-          rm -rf ./feeds/luci/applications/luci-app-passwall
-          rm -rf ./feeds/luci/applications/luci-app-ssr-plus
-          rm -rf ./feeds/luci/applications/luci-app-alist
-          rm -rf ./feeds/packages/net/xray-core
-          rm -rf ./feeds/packages/net/xray-plugin
+          rm -rf ./feeds/luci/applications/luci-app-openclash ./feeds/luci/applications/luci-app-passwall ./feeds/luci/applications/luci-app-ssr-plus ./feeds/luci/applications/luci-app-alist ./feeds/packages/net/xray-core ./feeds/packages/net/xray-plugin
 
       - name: Install feeds
         run: cd /workdir/openwrt && ./scripts/feeds install -a
@@ -129,13 +121,6 @@ jobs:
           chmod +x "$GITHUB_WORKSPACE/$DIY_P2_SH"
           "$GITHUB_WORKSPACE/$DIY_P2_SH"
 
-      - name: SSH connection to Actions
-        uses: P3TERX/ssh2actions@main
-        if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh != 'false') || contains(github.event.action, 'ssh')
-        env:
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-
       - name: Download package
         working-directory: /workdir/openwrt
         run: |
@@ -152,11 +137,12 @@ jobs:
         run: |
           echo "=== DEBUG: Environment check ==="
           command -v go && go version || echo "go NOT available"
+          command -v make && make --version || echo "make NOT available"
           echo "PATH: $PATH"
-          echo "Threads available: $(nproc 2>/dev/null || echo 'unknown')"
-          echo "make version: $(make --version 2>/dev/null || echo 'make not found')"
+          THREADS=$(nproc 2>/dev/null || echo 1)
+          echo "Threads: $THREADS"
           echo "Starting compilation..."
-          make -j$(nproc 2>/dev/null || echo 1) V=s || make -j1 V=s
+          make -j$THREADS V=s || make -j1 V=s
 
       - name: Check space usage
         if: always()
