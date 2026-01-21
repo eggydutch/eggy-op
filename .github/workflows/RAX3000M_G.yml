@@ -1,4 +1,4 @@
-name: RAX3000M_G
+name: RAX3000M
 
 on:
   repository_dispatch:
@@ -27,7 +27,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout
@@ -79,9 +79,14 @@ jobs:
       - name: Load custom feeds
         run: |
           cd /workdir/openwrt || { echo "ERROR: /workdir/openwrt does not exist"; ls -la /workdir; exit 1; }
-          [ -f "$FEEDS_CONF" ] && mv "$FEEDS_CONF" feeds.conf.default
+          if [ -f "$FEEDS_CONF" ] && [ "$FEEDS_CONF" != "feeds.conf.default" ]; then
+            mv "$FEEDS_CONF" feeds.conf.default
+          elif [ -f "$FEEDS_CONF" ]; then
+            echo "feeds.conf.default already exists, skipping mv"
+          fi
           chmod +x "$GITHUB_WORKSPACE/$DIY_P1_SH"
-          "$GITHUB_WORKSPACE/$DIY_P1_SH"
+          echo "Running diy-part1.sh ..."
+          "$GITHUB_WORKSPACE/$DIY_P1_SH" || { echo "diy-part1.sh failed"; exit 1; }
 
       - name: Update feeds
         run: cd /workdir/openwrt && ./scripts/feeds update -a
@@ -116,13 +121,6 @@ jobs:
           chmod +x "$GITHUB_WORKSPACE/$DIY_P2_SH"
           "$GITHUB_WORKSPACE/$DIY_P2_SH"
 
-      - name: SSH connection to Actions
-        uses: P3TERX/ssh2actions@main
-        if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh != 'false') || contains(github.event.action, 'ssh')
-        env:
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-
       - name: Download package
         working-directory: /workdir/openwrt
         run: |
@@ -147,6 +145,9 @@ jobs:
       - name: Check space usage
         if: always()
         run: df -hT
+
+      # Your upload/organize/release steps here (unchanged from previous)
+      # ...
 
       # ────────────────────────────────────────────────
       # Your original upload / organize / release steps
