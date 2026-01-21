@@ -30,37 +30,49 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Initialization environment + essential tools
+      - name: Setup essential tools & environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
           sudo docker image prune --all --force || true
-          sudo apt-get update -qq
-          # Install core basics FIRST to avoid command-not-found in later scripts
-          sudo apt-get install -y --no-install-recommends coreutils procps grep findutils debianutils make build-essential
-          # Then the full OpenWrt build deps
+          sudo apt-get update
+          
+          # Install core utilities FIRST
+          sudo apt-get install -y --no-install-recommends \
+            coreutils procps grep findutils debianutils make build-essential \
+            ca-certificates curl git wget unzip
+          
+          # Verify critical commands are present
+          echo "=== Essential commands check ==="
+          command -v make  && make --version  || echo "ERROR: make not installed"
+          command -v nproc && nproc        || echo "ERROR: nproc not installed"
+          command -v grep  && grep --version || echo "ERROR: grep not installed"
+          command -v which && which which   || echo "ERROR: which not installed"
+          command -v git   && git --version || echo "ERROR: git not installed"
+          
+          # Fail early if basics are missing
+          command -v make || { echo "FATAL: make is missing - cannot continue"; exit 1; }
+          
+          # Now install full OpenWrt build dependencies
           sudo apt-get install -y --no-install-recommends \
             ack antlr3 asciidoc autoconf automake autopoint binutils bison \
             bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext \
-            gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 \
+            gcc-multilib g++-multilib gperf haveged help2man intltool libc6-dev-i386 \
             libelf-dev libfuse-dev libglib2.0-dev libgmp3-dev libmpc-dev libmpfr-dev \
             libncurses5-dev libncursesw5-dev libpython3-dev libreadline-dev libssl-dev \
             libtool lrzsz mkisofs msmtp ninja-build p7zip p7zip-full patch pkgconf \
             python3 python3-pyelftools python3-setuptools qemu-utils rsync scons \
-            squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget \
-            xmlto xxd zlib1g-dev
+            squashfs-tools subversion swig texinfo uglifyjs upx-ucl vim xmlto xxd zlib1g-dev
+          
           sudo apt-get autoremove --purge -y || true
           sudo apt-get clean
           sudo timedatectl set-timezone "$TZ" || true
           sudo mkdir -p /workdir
           sudo chown $(whoami):$(id -gn) /workdir
-          # Verify critical commands exist
-          command -v make nproc grep which go || { echo "CRITICAL: Missing essential command"; exit 1; }
-          df -hT /workdir
 
       - name: Install Go 1.25.6
         uses: actions/setup-go@v6
@@ -68,50 +80,41 @@ jobs:
           go-version: '1.25.6'
           cache: false
 
-      - name: Clone source code
+      - name: Clone OpenWrt source
         working-directory: /workdir
         run: |
-          df -hT $PWD
-          git clone $REPO_URL -b $REPO_BRANCH openwrt
-          ls -la openwrt || echo "Clone failed - openwrt directory missing"
-
-      - name: Cache
-        uses: stupidloud/cachewrtbuild@main
-        with:
-          ccache: 'true'
-          prefix: /workdir/openwrt
+          git clone "$REPO_URL" -b "$REPO_BRANCH" openwrt
+          ls -la openwrt
 
       - name: Load custom feeds
         run: |
-          cd /workdir/openwrt || { echo "ERROR: /workdir/openwrt does not exist"; ls -la /workdir; exit 1; }
+          cd /workdir/openwrt || { echo "ERROR: openwrt dir missing"; ls -la /workdir; exit 1; }
           if [ -f "$FEEDS_CONF" ] && [ "$FEEDS_CONF" != "feeds.conf.default" ]; then
             mv "$FEEDS_CONF" feeds.conf.default
           elif [ -f "$FEEDS_CONF" ]; then
-            echo "feeds.conf.default already exists, skipping rename"
+            echo "feeds.conf.default already exists"
           fi
           chmod +x "$GITHUB_WORKSPACE/$DIY_P1_SH"
-          echo "Executing diy-part1.sh"
-          "$GITHUB_WORKSPACE/$DIY_P1_SH" || { echo "diy-part1.sh failed"; exit 1; }
+          "$GITHUB_WORKSPACE/$DIY_P1_SH" || exit 1
 
       - name: Update feeds
         run: cd /workdir/openwrt && ./scripts/feeds update -a
 
-      # - name: Update Golang
-      #   run: cd /workdir/openwrt && ... (keep commented)
-
       - name: Remove conflicting packages
         run: |
           cd /workdir/openwrt || exit 1
-          rm -rf ./feeds/luci/applications/luci-app-openclash ./feeds/luci/applications/luci-app-passwall ./feeds/luci/applications/luci-app-ssr-plus ./feeds/luci/applications/luci-app-alist ./feeds/packages/net/xray-core ./feeds/packages/net/xray-plugin
+          rm -rf feeds/luci/applications/luci-app-{openclash,passwall,ssr-plus,alist}
+          rm -rf feeds/packages/net/{xray-core,xray-plugin}
 
       - name: Install feeds
         run: cd /workdir/openwrt && ./scripts/feeds install -a
 
-      - name: Pre-download v2ray-geodata file (dlc.dat)
+      - name: Pre-download v2ray-geodata
         working-directory: /workdir/openwrt
         run: |
           mkdir -p dl
-          wget https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat -O dl/dlc.dat.$(date +%Y%m%d%H%M%S)
+          wget https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat \
+            -O dl/dlc.dat.$(date +%Y%m%d%H%M%S)
 
       - name: Load custom configuration
         working-directory: /workdir/openwrt
@@ -121,30 +124,28 @@ jobs:
           chmod +x "$GITHUB_WORKSPACE/$DIY_P2_SH"
           "$GITHUB_WORKSPACE/$DIY_P2_SH"
 
-      - name: Download package
+      - name: Download packages
         working-directory: /workdir/openwrt
         run: |
           make defconfig
           make download -j$(nproc 2>/dev/null || echo 4)
-          find dl -size -1024c -exec ls -l {} \;
-          find dl -size -1024c -exec rm -f {} \;
 
-      - name: Compile the firmware
+      - name: Compile firmware
         working-directory: /workdir/openwrt
         env:
           PATH: /usr/local/go/bin:${{ env.PATH }}
           GOTOOLCHAIN: auto
         run: |
-          echo "=== DEBUG: Environment check ==="
-          command -v go && go version || echo "go NOT available"
-          command -v make && make --version || echo "make NOT available"
+          echo "=== Compile environment debug ==="
+          command -v go  && go version  || echo "go MISSING"
+          command -v make && make --version || echo "make MISSING"
           echo "PATH: $PATH"
           THREADS=$(nproc 2>/dev/null || echo 1)
           echo "Threads: $THREADS"
-          echo "Starting compilation..."
+          echo "Starting build..."
           make -j$THREADS V=s || make -j1 V=s
 
-      - name: Check space usage
+      - name: Show disk usage
         if: always()
         run: df -hT
 
