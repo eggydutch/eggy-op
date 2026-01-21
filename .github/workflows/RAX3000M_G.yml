@@ -1,4 +1,4 @@
-name: RAX3000M
+name: RAX3000M_G
 
 on:
   repository_dispatch:
