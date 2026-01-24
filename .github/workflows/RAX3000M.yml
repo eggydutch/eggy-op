@@ -104,7 +104,8 @@ jobs:
       working-directory: /workdir/openwrt
       run: |
         mkdir -p dl
-        wget https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat -O dl/dlc.dat.$(date +%Y%m%d%H%M%S)
+        # Download latest but rename to the exact name the old Makefile expects
+        wget https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat -O dl/dlc.dat.20231202050515
 
     - name: Load custom configuration
       run: |
