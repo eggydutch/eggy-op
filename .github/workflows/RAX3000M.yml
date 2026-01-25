@@ -45,11 +45,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - name: Install Go 1.25.6
-      uses: actions/setup-go@v6
-      with:
-        go-version: '1.25.6'
-        cache: false
+    # - name: Install Go 1.25.6
+      # uses: actions/setup-go@v6
+      # with:
+        # go-version: '1.25.6'
+        # cache: false
 
     - name: Initialization environment
       env:
@@ -88,8 +88,15 @@ jobs:
     - name: Update feeds
       run: cd openwrt && ./scripts/feeds update -a
 
-    - name: Update Golang
-      run: cd openwrt && git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
+    # - name: Update Golang
+      # run: cd openwrt && git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
+
+    - name: Remove packages
+      run: |
+        cd openwrt
+        rm -rf ./feeds/packages/net/xray-core
+        rm -rf ./feeds/packages/net/xray-plugin
+        rm -rf ./feeds/packages/net/sing-box
 
     # - name: Remove packages
       # run: cd openwrt && rm -rf ./feeds/luci/applications/luci-app-openclash && rm -rf ./feeds/luci/applications/luci-app-passwall && rm -rf ./feeds/luci/applications/luci-app-ssr-plus && rm -rf ./feeds/luci/applications/luci-app-alist && rm -rf ./feeds/packages/net/xray-core && rm -rf ./feeds/packages/net/xray-plugin
