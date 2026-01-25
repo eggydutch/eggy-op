@@ -18,13 +18,15 @@
 # git clone https://github.com/kiddin9/openwrt-packages package/kiddin9
 ./scripts/feeds update -a
 sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
+
 # Update xray-core package to newer version
-cd feeds/packages/net/xray-core
+# cd feeds/packages/net/xray-core
 # Or replace whole dir with newer from a maintained repo
-rm -rf *
-git clone https://github.com/immortalwrt/packages.git -b master tmp
-cp -r tmp/net/xray-core/* .
-rm -rf tmp
+# rm -rf *
+# git clone https://github.com/immortalwrt/packages.git -b master tmp
+# cp -r tmp/net/xray-core/* .
+# rm -rf tmp
+
 # Or pin to a newer commit/tag that uses updated gvisor
 # sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
 # echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
