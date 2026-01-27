@@ -24,7 +24,6 @@ sed -i 's/192.168.1.1/192.168.1.1/g' package/base-files/files/bin/config_generat
 # Update packages
 # git clone -b master --single-branch https://github.com/fw876/helloworld.git package/luci-app-ssr-plus
 git clone -b master --single-branch https://github.com/vernesong/OpenClash.git package/openclash
-# git clone -b main --single-branch https://github.com/xiaorouji/openwrt-passwall.git package/luci-app-passwall
 git clone -b main --single-branch https://github.com/Openwrt-Passwall/openwrt-passwall2 package/luci-app-passwall2
 git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages.git package/passwall_packages
 git clone -b main --single-branch https://github.com/sbwml/luci-app-alist.git package/luci-app-alist
