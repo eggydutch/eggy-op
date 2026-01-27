@@ -99,6 +99,17 @@ jobs:
         rm -rf ./feeds/packages/net/sing-box
         rm -rf ./feeds/luci/applications/luci-app-openclash
         rm -rf ./feeds/luci/applications/luci-app-alist
+        
+    - name: Fix geoview go.mod invalid version
+      run: |
+        cd /workdir/openwrt
+        GEO_VIEW_MOD="package/passwall_packages/geoview/go.mod"
+        if [ -f "$GEO_VIEW_MOD" ]; then
+          sed -i 's/^go 1\.24\.0$/go 1.24/' "$GEO_VIEW_MOD" || echo "sed failed but continuing"
+          grep '^go ' "$GEO_VIEW_MOD"  # debug: show the fixed line
+        else
+          echo "geoview/go.mod not found — skipping fix"
+        fi
 
     # - name: Remove packages
       # run: cd openwrt && rm -rf ./feeds/luci/applications/luci-app-openclash && rm -rf ./feeds/luci/applications/luci-app-passwall && rm -rf ./feeds/luci/applications/luci-app-ssr-plus && rm -rf ./feeds/luci/applications/luci-app-alist && rm -rf ./feeds/packages/net/xray-core && rm -rf ./feeds/packages/net/xray-plugin
