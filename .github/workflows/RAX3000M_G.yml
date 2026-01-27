@@ -27,33 +27,39 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup base environment & essential tools
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
+          # Clean up disk space & unnecessary pre-installed stuff
           sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
           sudo docker image prune --all --force || true
-          sudo apt-get update
-          
-          # Force install make + basics very early
-          sudo apt-get install -y --no-install-recommends make build-essential coreutils procps grep
-          
-          # Verify
-          echo "=== Verification of essentials ==="
-          make --version || echo "make NOT installed"
-          nproc || echo "nproc NOT installed"
-          grep --version || echo "grep NOT installed"
-          
-          # Fail if make missing
-          make --version > /dev/null 2>&1 || { echo "FATAL: make is missing after install"; exit 1; }
-          
-          # Full deps (after basics are confirmed)
+
+          sudo apt-get update -qq
+
+          # Install minimal build tools VERY early — explicit packages to avoid build-essential metapackage issues on 24.04
+          sudo apt-get install -y --no-install-recommends \
+            gcc g++ cpp make binutils dpkg-dev libc6-dev \
+            coreutils procps grep patch
+
+          # Quick verification — fail fast if critical tools are missing
+          echo "=== Verification of essential build tools ==="
+          make --version  || { echo "ERROR: make missing"; exit 1; }
+          gcc --version   || { echo "ERROR: gcc missing"; exit 1; }
+          g++ --version   || { echo "ERROR: g++ missing"; exit 1; }
+          echo "nproc: $(nproc || echo 'not available')"
+          echo "All core tools look good."
+
+          # Refresh apt cache again (safety on 24.04)
+          sudo apt-get update -qq
+
+          # Install full OpenWrt build dependencies (without build-essential to prevent candidate errors)
           sudo apt-get install -y --no-install-recommends \
             ack antlr3 asciidoc autoconf automake autopoint binutils bison \
             bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext \
@@ -64,9 +70,12 @@ jobs:
             python3 python3-pyelftools python3-setuptools qemu-utils rsync scons \
             squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget \
             xmlto xxd zlib1g-dev
+
           sudo apt-get autoremove --purge -y || true
           sudo apt-get clean
+
           sudo timedatectl set-timezone "$TZ" || true
+
           sudo mkdir -p /workdir
           sudo chown $(whoami):$(id -gn) /workdir
           df -hT /workdir
@@ -80,12 +89,12 @@ jobs:
       - name: Clone source code
         working-directory: /workdir
         run: |
-          git clone $REPO_URL -b $REPO_BRANCH openwrt
+          git clone --depth=1 $REPO_URL -b $REPO_BRANCH openwrt
           ls -la openwrt
 
       - name: Load custom feeds
         run: |
-          cd /workdir/openwrt || { echo "openwrt dir missing"; ls -la /workdir; exit 1; }
+          cd /workdir/openwrt || { echo "openwrt directory missing"; ls -la /workdir; exit 1; }
           if [ -f "$FEEDS_CONF" ] && [ "$FEEDS_CONF" != "feeds.conf.default" ]; then
             mv "$FEEDS_CONF" feeds.conf.default
           fi
@@ -95,13 +104,16 @@ jobs:
       - name: Update feeds
         run: cd /workdir/openwrt && ./scripts/feeds update -a
 
-      # - name: Update Golang
-      #   run: cd /workdir/openwrt && ... (keep commented)
-
       - name: Remove conflicting packages
         run: |
           cd /workdir/openwrt || exit 1
-          rm -rf ./feeds/luci/applications/luci-app-openclash ./feeds/luci/applications/luci-app-passwall ./feeds/luci/applications/luci-app-ssr-plus ./feeds/luci/applications/luci-app-alist ./feeds/packages/net/xray-core ./feeds/packages/net/xray-plugin
+          rm -rf \
+            ./feeds/luci/applications/luci-app-openclash \
+            ./feeds/luci/applications/luci-app-passwall \
+            ./feeds/luci/applications/luci-app-ssr-plus \
+            ./feeds/luci/applications/luci-app-alist \
+            ./feeds/packages/net/xray-core \
+            ./feeds/packages/net/xray-plugin
 
       - name: Install feeds
         run: cd /workdir/openwrt && ./scripts/feeds install -a
@@ -110,7 +122,8 @@ jobs:
         working-directory: /workdir/openwrt
         run: |
           mkdir -p dl
-          wget https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat -O dl/dlc.dat.$(date +%Y%m%d%H%M%S)
+          wget -O dl/dlc.dat.$(date +%Y%m%d%H%M%S) \
+            https://github.com/v2fly/domain-list-community/releases/latest/download/dlc.dat
 
       - name: Load custom configuration
         working-directory: /workdir/openwrt
@@ -120,7 +133,7 @@ jobs:
           chmod +x "$GITHUB_WORKSPACE/$DIY_P2_SH"
           "$GITHUB_WORKSPACE/$DIY_P2_SH"
 
-      - name: Download package
+      - name: Download packages
         working-directory: /workdir/openwrt
         run: |
           make defconfig
@@ -132,7 +145,7 @@ jobs:
           PATH: /usr/local/go/bin:${{ env.PATH }}
           GOTOOLCHAIN: auto
         run: |
-          echo "=== Compile debug ==="
+          echo "=== Compile debug info ==="
           command -v go && go version || echo "go MISSING"
           command -v make && make --version || echo "make MISSING"
           echo "PATH: $PATH"
@@ -141,15 +154,11 @@ jobs:
           echo "Build starting..."
           make -j$THREADS V=s || make -j1 V=s
 
-      - name: Disk usage
+      - name: Disk usage (after build)
         if: always()
         run: df -hT
 
-      # ────────────────────────────────────────────────
-      # Add your upload / organize / release steps here
-      # (adjust paths to use /workdir/openwrt/bin)
-      # Example placeholders:
-      - name: Upload bin directory
+      - name: Upload bin directory (optional)
         uses: actions/upload-artifact@v4
         if: env.UPLOAD_BIN_DIR == 'true' && success()
         with:
