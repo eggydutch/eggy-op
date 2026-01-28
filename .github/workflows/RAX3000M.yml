@@ -99,17 +99,6 @@ jobs:
         rm -rf ./feeds/packages/net/sing-box
         rm -rf ./feeds/luci/applications/luci-app-openclash
         rm -rf ./feeds/luci/applications/luci-app-alist
-        
-    - name: Fix geoview go.mod invalid version
-      run: |
-        cd /workdir/openwrt
-        GEO_VIEW_MOD="package/passwall_packages/geoview/go.mod"
-        if [ -f "$GEO_VIEW_MOD" ]; then
-          sed -i 's/^go 1\.24\.0$/go 1.24/' "$GEO_VIEW_MOD" || echo "sed failed but continuing"
-          grep '^go ' "$GEO_VIEW_MOD"  # debug: show the fixed line
-        else
-          echo "geoview/go.mod not found — skipping fix"
-        fi
 
     # - name: Remove packages
       # run: cd openwrt && rm -rf ./feeds/luci/applications/luci-app-openclash && rm -rf ./feeds/luci/applications/luci-app-passwall && rm -rf ./feeds/luci/applications/luci-app-ssr-plus && rm -rf ./feeds/luci/applications/luci-app-alist && rm -rf ./feeds/packages/net/xray-core && rm -rf ./feeds/packages/net/xray-plugin
@@ -119,6 +108,46 @@ jobs:
 
     - name: Install feeds
       run: cd openwrt && ./scripts/feeds install -a
+
+    - name: Patch geoview go.mod invalid version format
+      run: |
+        cd /workdir/openwrt || { echo "openwrt dir missing"; exit 1; }
+
+        # Try common paths where geoview might be placed
+        POSSIBLE_PATHS=(
+          "package/passwall_packages/geoview/go.mod"
+          "package/openwrt-passwall-packages/geoview/go.mod"
+          "package/geoview/go.mod"
+          "feeds/passwall_packages/geoview/go.mod"
+        )
+
+        MOD_FILE=""
+        for path in "${POSSIBLE_PATHS[@]}"; do
+          if [ -f "$path" ]; then
+            MOD_FILE="$path"
+            echo "Found go.mod at: $MOD_FILE"
+            break
+          fi
+        done
+
+        if [ -z "$MOD_FILE" ]; then
+          echo "geoview/go.mod not found in common locations — skipping patch"
+          find package/ -name go.mod -path "*geoview*" 2>/dev/null || true
+          ls -la package/passwall* package/openwrt-passwall* package/geoview 2>/dev/null || true
+          exit 0  # don't fail the build, just warn
+        fi
+
+        echo "=== Before patch ==="
+        cat "$MOD_FILE" | grep -A5 -B5 '^go ' || grep '^go ' "$MOD_FILE" || echo "No go line found"
+
+        # More flexible sed: replace any 'go 1.24.0' (with optional spaces) → 'go 1.24'
+        sed -i -E 's/^[[:space:]]*go[[:space:]]+1\.24\.0[[:space:]]*$/go 1.24/' "$MOD_FILE"
+
+        echo "=== After patch ==="
+        cat "$MOD_FILE" | grep -A5 -B5 '^go ' || grep '^go ' "$MOD_FILE" || echo "No go line found after patch"
+
+        # Optional: if still bad, force downgrade to go 1.22 or 1.23
+        # sed -i 's/^go .*/go 1.23/' "$MOD_FILE"
 
     - name: Pre-download v2ray-geodata
       working-directory: /workdir/openwrt
