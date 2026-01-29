@@ -148,7 +148,7 @@ jobs:
 
         # Optional: if still bad, force downgrade to go 1.22 or 1.23
         # Change any 1.24.x → 1.24
-        sed -i -E 's/^go 1\.24(\.[0-9]+)?$/go 1.24/' "$MOD_FILE"
+        sed -i -E 's/^go 1\.23(\.[0-9]+)?$/go 1.23/' "$MOD_FILE"
 
     - name: Pre-download v2ray-geodata
       working-directory: /workdir/openwrt
