@@ -147,7 +147,8 @@ jobs:
         cat "$MOD_FILE" | grep -A5 -B5 '^go ' || grep '^go ' "$MOD_FILE" || echo "No go line found after patch"
 
         # Optional: if still bad, force downgrade to go 1.22 or 1.23
-        sed -i 's/^go .*/go 1.23/' "$MOD_FILE"
+        # Change any 1.24.x → 1.24
+        sed -i -E 's/^go 1\.24(\.[0-9]+)?$/go 1.24/' "$MOD_FILE"
 
     - name: Pre-download v2ray-geodata
       working-directory: /workdir/openwrt
