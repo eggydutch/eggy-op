@@ -26,6 +26,6 @@ sed -i 's/192.168.1.1/192.168.1.1/g' package/base-files/files/bin/config_generat
 git clone -b master --single-branch https://github.com/vernesong/OpenClash.git package/openclash
 git clone -b main --single-branch https://github.com/Openwrt-Passwall/openwrt-passwall2 package/luci-app-passwall2
 git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages.git package/passwall_packages
-git clone -b main --single-branch https://github.com/sbwml/luci-app-alist.git package/luci-app-alist
+git clone -b main --single-branch https://github.com/sbwml/luci-app-openlist2.git package/luci-app-openlist2
 # git clone -b master --single-branch https://github.com/immortalwrt/immortalwrt.git package/ip_master
 
