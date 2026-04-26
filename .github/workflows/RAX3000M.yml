@@ -156,7 +156,7 @@ jobs:
         define Build/Prepare\n\
         \t$(call Build/Prepare/Default)\n\
         \tsed -i '\''s/go 1.24.0/go 1.23/'\'' $(PKG_BUILD_DIR)/go.mod\n\
-        endef\n' feeds/package/luci-app-openlist2/Makefile
+        endef\n' /package/luci-app-openlist2/Makefile
 
     - name: Pre-download v2ray-geodata
       working-directory: /workdir/openwrt
