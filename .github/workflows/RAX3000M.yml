@@ -150,14 +150,6 @@ jobs:
         # Change any 1.24.x → 1.24
         # sed -i -E 's/^go 1\.23(\.[0-9]+)?$/go 1.23/' "$MOD_FILE"
 
-    - name: Patch OpenList Makefile
-      run: |
-        sed -i '/golang-package.mk/a \
-        define Build/Prepare\n\
-        \t$(call Build/Prepare/Default)\n\
-        \tsed -i '\''s/go 1.24.0/go 1.23/'\'' $(PKG_BUILD_DIR)/go.mod\n\
-        endef\n' /package/luci-app-openlist2/openlist2/Makefile
-
     - name: Pre-download v2ray-geodata
       working-directory: /workdir/openwrt
       run: |
